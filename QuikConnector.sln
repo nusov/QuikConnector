@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuikConnector", "QuikConnector\QuikConnector.vcxproj", "{C960952E-288F-4B7F-BAF0-8C54FCED1424}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuikShared", "QuikShared\QuikShared.vcxitems", "{359AA989-A678-4544-92B0-1350641F2C83}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuikRouter", "QuikRouter\QuikRouter.vcxproj", "{6FB40905-EFC0-4DA0-ACA9-406B2BF6AEBF}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		QuikShared\QuikShared.vcxitems*{359aa989-a678-4544-92b0-1350641f2c83}*SharedItemsImports = 9
+		QuikShared\QuikShared.vcxitems*{6fb40905-efc0-4da0-aca9-406b2bf6aebf}*SharedItemsImports = 4
+		QuikShared\QuikShared.vcxitems*{c960952e-288f-4b7f-baf0-8c54fced1424}*SharedItemsImports = 4
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C960952E-288F-4B7F-BAF0-8C54FCED1424}.Debug|x86.ActiveCfg = Debug|Win32
+		{C960952E-288F-4B7F-BAF0-8C54FCED1424}.Debug|x86.Build.0 = Debug|Win32
+		{C960952E-288F-4B7F-BAF0-8C54FCED1424}.Release|x86.ActiveCfg = Release|Win32
+		{C960952E-288F-4B7F-BAF0-8C54FCED1424}.Release|x86.Build.0 = Release|Win32
+		{6FB40905-EFC0-4DA0-ACA9-406B2BF6AEBF}.Debug|x86.ActiveCfg = Debug|Win32
+		{6FB40905-EFC0-4DA0-ACA9-406B2BF6AEBF}.Debug|x86.Build.0 = Debug|Win32
+		{6FB40905-EFC0-4DA0-ACA9-406B2BF6AEBF}.Release|x86.ActiveCfg = Release|Win32
+		{6FB40905-EFC0-4DA0-ACA9-406B2BF6AEBF}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {687CEFED-141E-4826-91A0-6CEFFC42ABA3}
+	EndGlobalSection
+EndGlobal
