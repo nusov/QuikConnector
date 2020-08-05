@@ -30,6 +30,9 @@ public:
 				if (zmq_skt->recv(msg, flags)) {
 					auto handle = msgpack::unpack(static_cast<const char*>(msg.data()), msg.size());
 
+					msgpack::sbuffer packed;
+					msgpack::packer<msgpack::sbuffer> pk(packed);
+
 					std::string funcname;
 					handle.get().via.array.ptr[0].convert(funcname);
 
@@ -42,30 +45,29 @@ public:
 
 						int top_prev = lua_gettop(L);
 						if (lua_pcall(L, handle.get().via.array.size - 1, LUA_MULTRET, 0) != 0) {
-							return luaL_error(L, "error");
+							lua_pop(L, -1);
+							pk.pack_array(0);
+							send_response("RUNTIME_ERROR", packed);
 						}
+						else {
+							int results = lua_gettop(L) - level;
 
-						int results = lua_gettop(L) - level;
+							pk.pack_array(results);
 
-						msgpack::sbuffer packed;
-						msgpack::packer<msgpack::sbuffer> pk(packed);
-						pk.pack_array(results);
+							for (int i = results; i > 0; i--) {
+								quik_stack_pack(pk, L, lua_gettop(L) - i + 1);
+							}
 
-						for (int i = results; i > 0; i--) {
-							quik_stack_pack(pk, L, lua_gettop(L) - i + 1);
+							// cleanup stack
+							for (int i = 0; i < results; i++) {
+								lua_pop(L, 1);
+							}
+
+							send_response("OK", packed);
 						}
-
-						// cleanup stack
-						for (int i = 0; i < results; i++) {
-							lua_pop(L, 1);
-						}
-
-						send_response("OK", packed);
 					}
 					else {
 						lua_pop(L, -1);
-						msgpack::sbuffer packed;
-						msgpack::packer<msgpack::sbuffer> pk(packed);
 						pk.pack_array(0);
 						send_response("NOT_FOUND", packed);
 					}
