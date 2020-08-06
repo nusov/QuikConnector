@@ -45,8 +45,8 @@ public:
 
 						int top_prev = lua_gettop(L);
 						if (lua_pcall(L, handle.get().via.array.size - 1, LUA_MULTRET, 0) != 0) {
+							pk.pack(lua_tostring(L, -1));
 							lua_pop(L, -1);
-							pk.pack_array(0);
 							send_response("RUNTIME_ERROR", packed);
 						}
 						else {
@@ -68,7 +68,7 @@ public:
 					}
 					else {
 						lua_pop(L, -1);
-						pk.pack_array(0);
+						pk.pack(funcname);
 						send_response("NOT_FOUND", packed);
 					}
 				}
