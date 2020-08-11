@@ -82,8 +82,7 @@ static int quik_router_socket_bind(lua_State *L) {
 
 static int quik_router_socket_send(lua_State *L) {
 	QuikRouterSocket *s = quik_router_socket_check(L, 1);
-	s->send(L);
-	return 1;
+	return s->send(L);
 }
 
 static int quik_router_socket_destructor(lua_State *L) {

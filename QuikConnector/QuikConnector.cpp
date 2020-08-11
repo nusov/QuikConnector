@@ -116,14 +116,12 @@ static int quik_bind(lua_State *L) {
 
 static int quik_process(lua_State *L) {
 	QuikSocket *s = quik_check(L, 1);
-	s->process(L, zmq::recv_flags::none);
-	return 1;
+	return s->process(L, zmq::recv_flags::none);
 }
 
 static int quik_process_noblock(lua_State *L) {
 	QuikSocket *s = quik_check(L, 1);
-	s->process(L, zmq::recv_flags::dontwait);
-	return 1;
+	return s->process(L, zmq::recv_flags::dontwait);
 }
 
 static int quik_destructor(lua_State *L) {
