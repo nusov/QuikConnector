@@ -1,5 +1,10 @@
 #pragma once
 
+// LUA configuration
+#define LUA_LIB
+#define LUA_BUILD_AS_DLL
+#define LUA_COMPAT_5_1
+
 // Third party dependencies
 #include <msgpack.hpp>
 

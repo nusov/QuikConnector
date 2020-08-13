@@ -2,27 +2,14 @@
 //
 
 #include "stdafx.h"
-#include "QuikStackUtils.h"
 
-
-class QuikRouterSocket {
+class QuikRouterSocket: public BaseSocket {
 public:
 	QuikRouterSocket(const std::string& bind_address) {
 		this->zmq_ctx = new zmq::context_t(1);
 		this->zmq_skt = new zmq::socket_t(*this->zmq_ctx, ZMQ_ROUTER);
 		this->zmq_skt->setsockopt(ZMQ_ROUTER_HANDOVER, 1);
 		this->zmq_skt->bind(bind_address);
-	}
-
-	~QuikRouterSocket() {
-		if (this->zmq_skt) {
-			this->zmq_skt->close();
-			delete this->zmq_skt;
-		}
-		if (this->zmq_ctx) {
-			this->zmq_ctx->close();
-			delete this->zmq_ctx;
-		}
 	}
 
 	int send(lua_State *L) {
@@ -45,26 +32,6 @@ public:
 		}
 		return 1;
 	}
-protected:
-	void send_response(const std::string& identity, const msgpack::sbuffer& buffer) {
-		if (this->zmq_skt) {
-			try {
-				zmq::message_t response1(identity.size());
-				std::memcpy(response1.data(), identity.data(), identity.size());
-				this->zmq_skt->send(response1, zmq::send_flags::sndmore);
-
-				zmq::message_t response2(buffer.size());
-				std::memcpy(response2.data(), buffer.data(), buffer.size());
-				this->zmq_skt->send(response2, zmq::send_flags::none);
-			}
-			catch (zmq::error_t ex) {
-				// TODO: handle transport exceptions
-			}
-		}
-	}
-private:
-	zmq::socket_t* zmq_skt;
-	zmq::context_t* zmq_ctx;
 };
 
 static QuikRouterSocket * quik_router_socket_check(lua_State *L, int n) {

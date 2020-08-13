@@ -2,25 +2,17 @@
 //
 
 #include "stdafx.h"
-#include "QuikStackUtils.h"
 
-class QuikSocket {
+class QuikSocket: public BaseSocket {
 public:
+	static inline const std::string RUNTIME_ERROR = "RUNTIME_ERROR";
+	static inline const std::string OK = "OK";
+	static inline const std::string NOT_FOUND = "NOT_FOUND";
+
 	QuikSocket(const std::string& bind_address) {
 		this->zmq_ctx = new zmq::context_t(1);
 		this->zmq_skt = new zmq::socket_t(*this->zmq_ctx, ZMQ_REP);
 		this->zmq_skt->bind(bind_address);
-	}
-
-	~QuikSocket() {
-		if (this->zmq_skt) {
-			this->zmq_skt->close();
-			delete this->zmq_skt;
-		}
-		if (this->zmq_ctx) {
-			this->zmq_ctx->close();
-			delete this->zmq_ctx;
-		}
 	}
 
 	int process(lua_State *L, zmq::recv_flags flags) {
@@ -47,7 +39,7 @@ public:
 						if (lua_pcall(L, handle.get().via.array.size - 1, LUA_MULTRET, 0) != 0) {
 							pk.pack(lua_tostring(L, -1));
 							lua_pop(L, -1);
-							send_response("RUNTIME_ERROR", packed);
+							send_response(RUNTIME_ERROR, packed);
 						}
 						else {
 							int results = lua_gettop(L) - level;
@@ -63,13 +55,13 @@ public:
 								lua_pop(L, 1);
 							}
 
-							send_response("OK", packed);
+							send_response(OK, packed);
 						}
 					}
 					else {
 						lua_pop(L, -1);
 						pk.pack(funcname);
-						send_response("NOT_FOUND", packed);
+						send_response(NOT_FOUND, packed);
 					}
 				}
 			}
@@ -79,26 +71,6 @@ public:
 		}
 		return 1;
 	}
-protected:
-	void send_response(const std::string& status, const msgpack::sbuffer& buffer) {
-		if (this->zmq_skt) {
-			try {
-				zmq::message_t response1(status.size());
-				std::memcpy(response1.data(), status.data(), status.size());
-				this->zmq_skt->send(response1, zmq::send_flags::sndmore);
-
-				zmq::message_t response2(buffer.size());
-				std::memcpy(response2.data(), buffer.data(), buffer.size());
-				this->zmq_skt->send(response2, zmq::send_flags::none);
-			}
-			catch (zmq::error_t ex) {
-				// TODO: handle transport exceptions
-			}
-		}
-	}
-private:
-	zmq::socket_t* zmq_skt;
-	zmq::context_t* zmq_ctx;
 };
 
 static QuikSocket * quik_check(lua_State *L, int n) {

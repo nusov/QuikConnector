@@ -6,6 +6,8 @@
 #pragma once
 
 #include "targetver.h"
+#include "StackUtils.h"
+#include "BaseSocket.h"
 
 // Windows configuration
 #define WIN32_LEAN_AND_MEAN

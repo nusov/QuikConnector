@@ -1,4 +1,4 @@
-#include "QuikStackUtils.h"
+#include "StackUtils.h"
 
 int quik_stack_table_count(lua_State *L, int t) {
 	lua_pushnil(L);

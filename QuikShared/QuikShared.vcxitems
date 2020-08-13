@@ -4,6 +4,7 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
     <ItemsProjectGuid>{359aa989-a678-4544-92b0-1350641f2c83}</ItemsProjectGuid>
+    <ItemsProjectName>QuikShared</ItemsProjectName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -14,11 +15,12 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QuikStackUtils.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)StackUtils.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QuikStackUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BaseSocket.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StackUtils.h" />
   </ItemGroup>
 </Project>
