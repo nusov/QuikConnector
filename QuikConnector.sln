@@ -9,6 +9,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuikShared", "QuikShared\Qu
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuikRouter", "QuikRouter\QuikRouter.vcxproj", "{6FB40905-EFC0-4DA0-ACA9-406B2BF6AEBF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "QuikIntegration", "QuikIntegration", "{782E462B-6CCB-4B63-9262-80C9ED9BC67D}"
+	ProjectSection(SolutionItems) = preProject
+		QuikIntegration\QuikIntegration.lua = QuikIntegration\QuikIntegration.lua
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		QuikShared\QuikShared.vcxitems*{359aa989-a678-4544-92b0-1350641f2c83}*SharedItemsImports = 9

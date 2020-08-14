@@ -1,5 +1,5 @@
 package.cpath = package.cpath .. ';' 
-	.. getScriptPath() .. "\\lib\\?.dll"
+	.. getScriptPath() .. "\\lib\\x64\\Release\\?.dll"
 
 require("QuikConnector")
 require("QuikRouter")
